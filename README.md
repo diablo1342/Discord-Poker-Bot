@@ -12,7 +12,8 @@ Supports both classic text commands and interactive button UI for a smooth poker
     • Check / Call / Fold  
     • 1/3 Pot, 1/2 Pot, 3/4 Pot, Pot  
     • All-In  
-    • Help (quick guide in DM)  
+    • Help (quick guide in DM)
+- **Card Images** - Uses images of cards through deckofcardsapi.com
 - **Blinds and Buy-ins** – configure small blind, big blind, min and max buy-in.  
 - **Hole Cards in DMs** – players receive private card images.  
 - **Auto Hand Flow** – next hand starts automatically unless ended.  
