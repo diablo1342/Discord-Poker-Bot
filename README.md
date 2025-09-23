@@ -51,11 +51,12 @@ Supports both classic text commands and interactive button UI for a smooth poker
 
 ## 📸 Demo
 
-Link to demo: https://drive.google.com/file/d/11YsUu8-Wrp9gPQhgX6vTiqNV3QvlXr4B/view?usp=sharing
+Link to demo: [View Demo](https://drive.google.com/file/d/11YsUu8-Wrp9gPQhgX6vTiqNV3QvlXr4B/view?usp=sharing)
 
 ---
 
 ## ▶️ Usage
 
-1. Invite the bot to your server using this link: https://discord.com/oauth2/authorize?client_id=1419800449556549684&permissions=8&integration_type=0&scope=bot 
-2. In any channel, start a table:  
+1. [Invite the bot to your Discord server using this link](https://discord.com/oauth2/authorize?client_id=1419800449556549684&permissions=8&integration_type=0&scope=bot)  
+2. In any channel, start a table:
+
