@@ -51,9 +51,7 @@ Supports both classic text commands and interactive button UI for a smooth poker
 
 ## 📸 Demo
 
-*(Example: Button-based betting with auto hand progression)*
-
-![Poker Bot Demo](demo.png)
+![Poker Bot Demo]([demo.png](https://drive.google.com/file/d/11YsUu8-Wrp9gPQhgX6vTiqNV3QvlXr4B/view?usp=sharing))
 
 ---
 
