@@ -55,6 +55,7 @@ async def begin(ctx):
     ok, msg = t.begin_hand()
     if not ok: return await ctx.send(msg)
 
+    # DM hole cards
     for p in t.players:
         member = ctx.guild.get_member(p.user_id)
         try:
@@ -63,16 +64,16 @@ async def begin(ctx):
         except Exception:
             await ctx.send(f"⚠️ Could not DM {p.name}. Enable DMs from server members.")
 
-    await ctx.send(
-        "🟡 " + msg + "\n" + t.table_text(),
-        view=ActionView(bot, t, ctx)
-    )
+    # Send buttons for first hand
+    view = ActionView(bot, t, ctx)
+    await ctx.send("🟡 " + msg + "\n" + t.table_text(), view=view)
 
 @bot.command(name="status")
 async def status(ctx):
     t = get_table(ctx)
     if not t: return await ctx.reply("No table.")
-    await ctx.send(t.table_text(), view=ActionView(bot, t, ctx))
+    view = ActionView(bot, t, ctx)
+    await ctx.send(t.table_text(), view=view)
 
 # ---- Betting helpers ----
 async def maybe_next_street(ctx, t: PokerTable):
@@ -90,10 +91,9 @@ async def maybe_next_street(ctx, t: PokerTable):
         elif t.street == "showdown":
             await begin_showdown(ctx, t)
             return
-    await ctx.send(
-        t.table_text(),
-        view=ActionView(bot, t, ctx)
-    )
+
+    view = ActionView(bot, t, ctx)
+    await ctx.send(t.table_text(), view=view)
 
 # ---- Actions ----
 @bot.command(name="check")
@@ -103,8 +103,10 @@ async def check(ctx):
     p = t.players[t.turn_idx]
     if p.user_id != ctx.author.id: return await ctx.send("Not your turn.")
     if p.committed < t.current_bet: return await ctx.send("You cannot check; you must call or fold.")
+
     t.acted_this_round.add(p.user_id)
     t.turn_idx = (t.turn_idx + 1) % len(t.players)
+
     await ctx.send(f"{p.name} checks.")
     if await handle_allin_runout(ctx, t): return
     await maybe_next_street(ctx, t)
@@ -115,13 +117,16 @@ async def call(ctx):
     if not t: return
     p = t.players[t.turn_idx]
     if p.user_id != ctx.author.id: return await ctx.send("Not your turn.")
+
     to_call = t.current_bet - p.committed
     pay = min(to_call, p.stack)
     p.stack -= pay
     p.committed += pay
     t.pot += pay
+
     t.acted_this_round.add(p.user_id)
     t.turn_idx = (t.turn_idx + 1) % len(t.players)
+
     await ctx.send(f"{p.name} calls {pay}.")
     if await handle_allin_runout(ctx, t): return
     await maybe_next_street(ctx, t)
@@ -132,15 +137,19 @@ async def raise_cmd(ctx, amount: int):
     if not t: return
     p = t.players[t.turn_idx]
     if p.user_id != ctx.author.id: return await ctx.send("Not your turn.")
+
     to_call = t.current_bet - p.committed
     total = to_call + amount
     if total > p.stack: return await ctx.send("Not enough chips.")
+
     p.stack -= total
     p.committed += total
     t.pot += total
     t.current_bet += amount
+
     t.acted_this_round.add(p.user_id)
     t.turn_idx = (t.turn_idx + 1) % len(t.players)
+
     await ctx.send(f"{p.name} raises {amount}. Current bet = {t.current_bet}")
     await maybe_next_street(ctx, t)
 
@@ -151,13 +160,16 @@ async def allin(ctx):
     p = t.players[t.turn_idx]
     if p.user_id != ctx.author.id: return await ctx.send("Not your turn.")
     if p.stack <= 0: return await ctx.send("You have no chips.")
+
     pay = p.stack
     p.stack = 0
     p.committed += pay
     t.pot += pay
     t.current_bet = max([q.committed for q in t.players if not q.folded] + [t.current_bet])
+
     t.acted_this_round.add(p.user_id)
     t.turn_idx = (t.turn_idx + 1) % len(t.players)
+
     await ctx.send(f"{p.name} goes all-in for {pay}!")
     if await handle_allin_runout(ctx, t): return
     await maybe_next_street(ctx, t)
@@ -168,14 +180,17 @@ async def fold(ctx):
     if not t: return
     p = t.players[t.turn_idx]
     if p.user_id != ctx.author.id: return await ctx.send("Not your turn.")
+
     p.folded = True
     t.acted_this_round.add(p.user_id)
     alive = [pl for pl in t.players if not pl.folded]
+
     if len(alive) == 1:
         winner = alive[0]
         winner.stack += t.pot
         t.pot = 0
         t.street = "idle"
+
         await ctx.send(f"{p.name} folds. {winner.name} wins the pot!")
         t.start_fold_winner_window(winner.user_id)
         await ctx.send(f"{winner.name}, type `!poker show` within 7s to reveal or do nothing to muck.")
