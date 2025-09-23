@@ -57,5 +57,5 @@ Link to demo: https://drive.google.com/file/d/11YsUu8-Wrp9gPQhgX6vTiqNV3QvlXr4B/
 
 ## ▶️ Usage
 
-1. [Invite the bot to your server](https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=277025508352&scope=bot).  
+1. Invite the bot to your server using this link: https://discord.com/oauth2/authorize?client_id=1419800449556549684&permissions=8&integration_type=0&scope=bot 
 2. In any channel, start a table:  
