@@ -22,16 +22,16 @@ bot = commands.Bot(command_prefix="!poker ", intents=intents)
 # remove default help so we can override with custom
 bot.remove_command("help")
 
-# ===== Global tables =====
+
 tables: dict[int, PokerTable] = {}
 def get_table(ctx) -> PokerTable | None:
     return tables.get(ctx.channel.id)
 
-# ===== Custom Help =====
+
 @bot.command(name="help")
 async def help_cmd(ctx):
     help_text = """
-**🃏 Poker Bot Commands**
+
 
 **Setup**
 - `!poker start <sb> <bb> <min_buyin> <max_buyin>` → Create a new table in this channel
@@ -52,12 +52,10 @@ async def help_cmd(ctx):
 - `!poker show` → Reveal your cards (after losing or winning by fold)
 - `!poker muck` → Muck your cards (default after 7s if no action)
 
----
-ℹ️ Poker bot supports both text commands and (optional) Discord UI buttons for quick betting actions.
-"""
+
     await ctx.send(help_text)
 
-# ===== Commands =====
+
 @bot.command(name="start")
 async def start(ctx, sb: int, bb: int, min_buyin: int, max_buyin: int):
     if get_table(ctx):
@@ -109,7 +107,6 @@ async def status(ctx):
     view = ActionView(bot, t, ctx)
     await ctx.send(t.table_text(), view=view)
 
-# ---- Betting helpers ----
 async def maybe_next_street(ctx, t: PokerTable):
     if t.everyone_matched():
         t.next_street()
@@ -129,7 +126,6 @@ async def maybe_next_street(ctx, t: PokerTable):
     view = ActionView(bot, t, ctx)
     await ctx.send(t.table_text(), view=view)
 
-# ---- Actions ----
 @bot.command(name="check")
 async def check(ctx):
     t = get_table(ctx)
@@ -255,7 +251,7 @@ async def end(ctx):
     else:
         await ctx.send("No table.")
 
-# ===== Run =====
 if __name__ == "__main__":
     print("Poker bot with refreshed buttons online.")
     bot.run(TOKEN)
+
