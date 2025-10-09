@@ -1,11 +1,11 @@
-# ♠️ Discord Poker Bot
+# Discord Poker Bot
 
 A heads-up **Texas Hold’em Poker Bot** for Discord.  
 Supports both classic text commands and interactive button UI for a smooth poker experience.
 
 ---
 
-## ✨ Features
+## Features
 
 - **Command-based gameplay** – use `!poker check`, `!poker call`, `!poker raise <amt>`, etc.  
 - **Interactive Buttons** – play hands quickly with one-click actions:  
@@ -24,7 +24,7 @@ Supports both classic text commands and interactive button UI for a smooth poker
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 - 📜 `pokerbot_5d.py` – Main bot entry point  
 - 📜 `table.py` – Poker table logic (players, blinds, betting, pot management)  
@@ -38,7 +38,7 @@ Supports both classic text commands and interactive button UI for a smooth poker
 
 ---
 
-## 📖 File Explanations
+## File Explanations
 
 - **pokerbot.py** – The main bot script. Handles all commands (`!poker start`, `!poker join`, `!poker begin`, etc.), manages tables per channel, and coordinates gameplay.  
 - **table.py** – Core poker engine. Tracks players, blinds, dealer button, pot size, street progression, and betting state.  
@@ -52,7 +52,7 @@ Supports both classic text commands and interactive button UI for a smooth poker
 
 ---
 
-## 📸 Demo
+## Demo
 
 Link to demo: [View Demo](https://drive.google.com/file/d/11YsUu8-Wrp9gPQhgX6vTiqNV3QvlXr4B/view?usp=sharing)
 
