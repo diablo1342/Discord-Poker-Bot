@@ -31,8 +31,6 @@ def get_table(ctx) -> PokerTable | None:
 @bot.command(name="help")
 async def help_cmd(ctx):
     help_text = """
-
-
 **Setup**
 - `!poker start <sb> <bb> <min_buyin> <max_buyin>` → Create a new table in this channel
 - `!poker join` → Sit down at the table
@@ -51,9 +49,9 @@ async def help_cmd(ctx):
 **Showdown & Muck**
 - `!poker show` → Reveal your cards (after losing or winning by fold)
 - `!poker muck` → Muck your cards (default after 7s if no action)
-
-
+"""
     await ctx.send(help_text)
+
 
 
 @bot.command(name="start")
@@ -254,4 +252,5 @@ async def end(ctx):
 if __name__ == "__main__":
     print("Poker bot with refreshed buttons online.")
     bot.run(TOKEN)
+
 
